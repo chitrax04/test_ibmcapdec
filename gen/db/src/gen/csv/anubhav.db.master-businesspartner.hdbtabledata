@@ -1,0 +1,41 @@
+{
+  "format_version": 1,
+  "imports": [
+    {
+      "target_table": "ANUBHAV_DB_MASTER_BUSINESSPARTNER",
+      "source_data": {
+        "data_type": "CSV",
+        "file_name": "anubhav.db.master-businesspartner.csv",
+        "has_header": true,
+        "type_config": {
+          "delimiter": ","
+        }
+      },
+      "import_settings": {
+        "import_columns": [
+          "NODE_KEY",
+          "BP_ROLE",
+          "EMAIL_ADDRESS",
+          "PHONE_NUMBER",
+          "FAX_NUMBER",
+          "WEB_ADDRESS",
+          "ADDRESS_GUID_NODE_KEY",
+          "BP_ID",
+          "COMPANY_NAME"
+        ],
+        "include_filter": []
+      },
+      "column_mappings": {
+        "NODE_KEY": "NODE_KEY",
+        "BP_ROLE": "BP_ROLE",
+        "EMAIL_ADDRESS": "EMAIL_ADDRESS",
+        "PHONE_NUMBER": "PHONE_NUMBER",
+        "FAX_NUMBER": "FAX_NUMBER",
+        "WEB_ADDRESS": "WEB_ADDRESS",
+        "ADDRESS_GUID_NODE_KEY": "ADDRESS_GUID_NODE_KEY",
+        "BP_ID": "BP_ID",
+        "COMPANY_NAME": "COMPANY_NAME"
+      }
+    }
+  ]
+}

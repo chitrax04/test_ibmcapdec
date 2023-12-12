@@ -1,0 +1,15 @@
+VIEW localized_anubhav_db_transaction_poitems AS SELECT
+  L.ID,
+  L.CURRENCY_code,
+  L.GROSS_AMOUNT,
+  L.NET_AMOUNT,
+  L.TAX_AMOUNT,
+  L.PARENT_KEY_ID,
+  L.PO_ITEM_POS,
+  L.PRODUCT_GUID_NODE_KEY
+FROM anubhav_db_transaction_poitems AS L
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN localized_sap_common_Currencies AS CURRENCY ON (CURRENCY.code = CURRENCY_code),
+  MANY TO ONE JOIN localized_anubhav_db_transaction_purchaseorder AS PARENT_KEY ON (PARENT_KEY.ID = PARENT_KEY_ID),
+  MANY TO ONE JOIN localized_anubhav_db_master_product AS PRODUCT_GUID ON (PRODUCT_GUID.NODE_KEY = PRODUCT_GUID_NODE_KEY)
+)

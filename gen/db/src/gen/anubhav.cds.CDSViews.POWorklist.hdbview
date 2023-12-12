@@ -1,0 +1,18 @@
+VIEW anubhav_cds_CDSViews_POWorklist AS SELECT
+  purchaseorder_0.PO_ID AS PurchaseOrderId,
+  Items_1.PO_ITEM_POS AS ItemPosition,
+  PARTNER_GUID_3.BP_ID AS PartnerId,
+  PARTNER_GUID_3.COMPANY_NAME AS CompanyName,
+  purchaseorder_0.GROSS_AMOUNT AS GrossAmount,
+  purchaseorder_0.NET_AMOUNT AS NetAmount,
+  purchaseorder_0.TAX_AMOUNT AS TaxAmount,
+  purchaseorder_0.CURRENCY_code AS CurrencyCode_code,
+  purchaseorder_0.OVERALL_STATUS AS Status,
+  PRODUCT_GUID_2.PRODUCT_ID AS ProductId,
+  PRODUCT_GUID_2.DESCRIPTION AS ProductName,
+  ADDRESS_GUID_4.CITY AS City,
+  ADDRESS_GUID_4.COUNTRY AS Country
+FROM ((((anubhav_db_transaction_purchaseorder AS purchaseorder_0 LEFT JOIN anubhav_db_transaction_poitems AS Items_1 ON (Items_1.PARENT_KEY_ID = purchaseorder_0.ID)) LEFT JOIN anubhav_db_master_product AS PRODUCT_GUID_2 ON Items_1.PRODUCT_GUID_NODE_KEY = PRODUCT_GUID_2.NODE_KEY) LEFT JOIN anubhav_db_master_businesspartner AS PARTNER_GUID_3 ON purchaseorder_0.PARTNER_GUID_NODE_KEY = PARTNER_GUID_3.NODE_KEY) LEFT JOIN anubhav_db_master_address AS ADDRESS_GUID_4 ON PARTNER_GUID_3.ADDRESS_GUID_NODE_KEY = ADDRESS_GUID_4.NODE_KEY)
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN sap_common_Currencies AS CurrencyCode ON (CurrencyCode.code = CurrencyCode_code)
+)

@@ -1,0 +1,41 @@
+{
+  "format_version": 1,
+  "imports": [
+    {
+      "target_table": "ANUBHAV_DB_TRANSACTION_PURCHASEORDER",
+      "source_data": {
+        "data_type": "CSV",
+        "file_name": "anubhav.db.transaction-purchaseorder.csv",
+        "has_header": true,
+        "type_config": {
+          "delimiter": ","
+        }
+      },
+      "import_settings": {
+        "import_columns": [
+          "ID",
+          "PO_ID",
+          "PARTNER_GUID_NODE_KEY",
+          "CURRENCY_CODE",
+          "GROSS_AMOUNT",
+          "NET_AMOUNT",
+          "TAX_AMOUNT",
+          "LIFECYCLE_STATUS",
+          "OVERALL_STATUS"
+        ],
+        "include_filter": []
+      },
+      "column_mappings": {
+        "ID": "ID",
+        "PO_ID": "PO_ID",
+        "PARTNER_GUID_NODE_KEY": "PARTNER_GUID_NODE_KEY",
+        "CURRENCY_CODE": "CURRENCY_CODE",
+        "GROSS_AMOUNT": "GROSS_AMOUNT",
+        "NET_AMOUNT": "NET_AMOUNT",
+        "TAX_AMOUNT": "TAX_AMOUNT",
+        "LIFECYCLE_STATUS": "LIFECYCLE_STATUS",
+        "OVERALL_STATUS": "OVERALL_STATUS"
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+VIEW localized_MyService_ReadEmployeeSrv AS SELECT
+  employees_0.ID,
+  employees_0.nameFirst,
+  employees_0.nameMiddle,
+  employees_0.nameLast,
+  employees_0.nameInitials,
+  employees_0.sex,
+  employees_0."LANGUAGE",
+  employees_0.phoneNumber,
+  employees_0.email,
+  employees_0.loginName,
+  employees_0.Currency_code,
+  employees_0.salaryAmount,
+  employees_0.accountNumber,
+  employees_0.bankId,
+  employees_0.bankName
+FROM localized_anubhav_db_master_employees AS employees_0
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN localized_MyService_Currencies AS Currency ON (Currency.code = Currency_code)
+)

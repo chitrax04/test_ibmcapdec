@@ -1,0 +1,55 @@
+{
+  "format_version": 1,
+  "imports": [
+    {
+      "target_table": "ANUBHAV_DB_MASTER_PRODUCT",
+      "source_data": {
+        "data_type": "CSV",
+        "file_name": "anubhav.db.master-product.csv",
+        "has_header": true,
+        "type_config": {
+          "delimiter": ","
+        }
+      },
+      "import_settings": {
+        "import_columns": [
+          "NODE_KEY",
+          "PRODUCT_ID",
+          "TYPE_CODE",
+          "CATEGORY",
+          "SUPPLIER_GUID_NODE_KEY",
+          "TAX_TARIF_CODE",
+          "MEASURE_UNIT",
+          "WEIGHT_MEASURE",
+          "WEIGHT_UNIT",
+          "CURRENCY_CODE",
+          "PRICE",
+          "WIDTH",
+          "DEPTH",
+          "HEIGHT",
+          "DIM_UNIT",
+          "DESCRIPTION"
+        ],
+        "include_filter": []
+      },
+      "column_mappings": {
+        "NODE_KEY": "NODE_KEY",
+        "PRODUCT_ID": "PRODUCT_ID",
+        "TYPE_CODE": "TYPE_CODE",
+        "CATEGORY": "CATEGORY",
+        "SUPPLIER_GUID_NODE_KEY": "SUPPLIER_GUID_NODE_KEY",
+        "TAX_TARIF_CODE": "TAX_TARIF_CODE",
+        "MEASURE_UNIT": "MEASURE_UNIT",
+        "WEIGHT_MEASURE": "WEIGHT_MEASURE",
+        "WEIGHT_UNIT": "WEIGHT_UNIT",
+        "CURRENCY_CODE": "CURRENCY_CODE",
+        "PRICE": "PRICE",
+        "WIDTH": "WIDTH",
+        "DEPTH": "DEPTH",
+        "HEIGHT": "HEIGHT",
+        "DIM_UNIT": "DIM_UNIT",
+        "DESCRIPTION": "DESCRIPTION"
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+COLUMN TABLE anubhav_db_master_product_texts (
+  locale NVARCHAR(14) NOT NULL,
+  NODE_KEY NVARCHAR(32) NOT NULL,
+  DESCRIPTION NVARCHAR(255),
+  PRIMARY KEY(locale, NODE_KEY)
+)

@@ -1,0 +1,20 @@
+COLUMN TABLE anubhav_db_master_employees (
+  ID NVARCHAR(36) NOT NULL,
+  nameFirst NVARCHAR(40),
+  nameMiddle NVARCHAR(40),
+  nameLast NVARCHAR(40),
+  nameInitials NVARCHAR(40),
+  sex NVARCHAR(1),
+  "LANGUAGE" NVARCHAR(1),
+  phoneNumber NVARCHAR(30),
+  email NVARCHAR(255),
+  loginName NVARCHAR(12),
+  Currency_code NVARCHAR(3),
+  salaryAmount DECIMAL(10, 2),
+  accountNumber NVARCHAR(16),
+  bankId NVARCHAR(30),
+  bankName NVARCHAR(64),
+  PRIMARY KEY(ID)
+) WITH ASSOCIATIONS (
+  MANY TO ONE JOIN sap_common_Currencies AS Currency ON (Currency.code = Currency_code)
+)

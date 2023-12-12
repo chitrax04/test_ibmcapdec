@@ -1,0 +1,23 @@
+VIEW localized_anubhav_db_master_product AS SELECT
+  L_0.NODE_KEY,
+  L_0.PRODUCT_ID,
+  L_0.TYPE_CODE,
+  L_0.CATEGORY,
+  coalesce(localized_1.DESCRIPTION, L_0.DESCRIPTION) AS DESCRIPTION,
+  L_0.SUPPLIER_GUID_NODE_KEY,
+  L_0.TAX_TARIF_CODE,
+  L_0.MEASURE_UNIT,
+  L_0.WEIGHT_MEASURE,
+  L_0.WEIGHT_UNIT,
+  L_0.CURRENCY_CODE,
+  L_0.PRICE,
+  L_0.WIDTH,
+  L_0."DEPTH",
+  L_0.HEIGHT,
+  L_0.DIM_UNIT
+FROM (anubhav_db_master_product AS L_0 LEFT JOIN anubhav_db_master_product_texts AS localized_1 ON localized_1.NODE_KEY = L_0.NODE_KEY AND localized_1.locale = SESSION_CONTEXT('LOCALE'))
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN anubhav_db_master_businesspartner AS SUPPLIER_GUID ON (SUPPLIER_GUID.NODE_KEY = SUPPLIER_GUID_NODE_KEY),
+  MANY TO MANY JOIN anubhav_db_master_product_texts AS texts ON (texts.NODE_KEY = NODE_KEY),
+  MANY TO ONE JOIN anubhav_db_master_product_texts AS localized ON (localized.NODE_KEY = NODE_KEY AND localized.locale = SESSION_CONTEXT('LOCALE'))
+)

@@ -1,0 +1,10 @@
+VIEW anubhav_cds_CDSViews_CProductValuesView AS SELECT
+  ProductView_0.ProductId,
+  ProductView_0.Country,
+  round(sum(To_Items_1.GrossAmount), 2) AS TotalPurchaseAmount,
+  To_Items_1.CurrencyCode_code AS CurrencyCode_code
+FROM (anubhav_cds_CDSViews_ProductView AS ProductView_0 LEFT JOIN anubhav_cds_CDSViews_ItemView AS To_Items_1 ON To_Items_1.ProductId = ProductView_0.ProductId)
+GROUP BY ProductView_0.ProductId, ProductView_0.Country, To_Items_1.CurrencyCode_code
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN sap_common_Currencies AS CurrencyCode ON (CurrencyCode.code = CurrencyCode_code)
+)

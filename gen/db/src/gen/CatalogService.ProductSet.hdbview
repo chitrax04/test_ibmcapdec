@@ -1,0 +1,23 @@
+VIEW CatalogService_ProductSet AS SELECT
+  product_0.NODE_KEY,
+  product_0.PRODUCT_ID,
+  product_0.TYPE_CODE,
+  product_0.CATEGORY,
+  product_0.DESCRIPTION,
+  product_0.SUPPLIER_GUID_NODE_KEY,
+  product_0.TAX_TARIF_CODE,
+  product_0.MEASURE_UNIT,
+  product_0.WEIGHT_MEASURE,
+  product_0.WEIGHT_UNIT,
+  product_0.CURRENCY_CODE,
+  product_0.PRICE,
+  product_0.WIDTH,
+  product_0."DEPTH",
+  product_0.HEIGHT,
+  product_0.DIM_UNIT
+FROM anubhav_db_master_product AS product_0
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN CatalogService_BusinessPartnerSet AS SUPPLIER_GUID ON (SUPPLIER_GUID.NODE_KEY = SUPPLIER_GUID_NODE_KEY),
+  MANY TO MANY JOIN CatalogService_ProductSet_texts AS texts ON (texts.NODE_KEY = NODE_KEY),
+  MANY TO ONE JOIN CatalogService_ProductSet_texts AS localized ON (localized.NODE_KEY = NODE_KEY AND localized.locale = SESSION_CONTEXT('LOCALE'))
+)

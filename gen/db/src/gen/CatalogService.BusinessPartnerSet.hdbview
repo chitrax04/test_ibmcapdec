@@ -1,0 +1,14 @@
+VIEW CatalogService_BusinessPartnerSet AS SELECT
+  businesspartner_0.NODE_KEY,
+  businesspartner_0.BP_ROLE,
+  businesspartner_0.EMAIL_ADDRESS,
+  businesspartner_0.PHONE_NUMBER,
+  businesspartner_0.FAX_NUMBER,
+  businesspartner_0.WEB_ADDRESS,
+  businesspartner_0.ADDRESS_GUID_NODE_KEY,
+  businesspartner_0.BP_ID,
+  businesspartner_0.COMPANY_NAME
+FROM anubhav_db_master_businesspartner AS businesspartner_0
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN CatalogService_AddressSet AS ADDRESS_GUID ON (ADDRESS_GUID.NODE_KEY = ADDRESS_GUID_NODE_KEY)
+)

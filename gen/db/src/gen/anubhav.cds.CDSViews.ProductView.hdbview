@@ -1,0 +1,13 @@
+VIEW anubhav_cds_CDSViews_ProductView AS SELECT
+  product_0.NODE_KEY AS ProductId,
+  product_0.DESCRIPTION AS Description,
+  product_0.CATEGORY AS Category,
+  product_0.PRICE AS Price,
+  SUPPLIER_GUID_1.BP_ID AS SupplierId,
+  SUPPLIER_GUID_1.COMPANY_NAME AS SupplierName,
+  ADDRESS_GUID_2.CITY AS City,
+  ADDRESS_GUID_2.COUNTRY AS Country
+FROM ((anubhav_db_master_product AS product_0 LEFT JOIN anubhav_db_master_businesspartner AS SUPPLIER_GUID_1 ON product_0.SUPPLIER_GUID_NODE_KEY = SUPPLIER_GUID_1.NODE_KEY) LEFT JOIN anubhav_db_master_address AS ADDRESS_GUID_2 ON SUPPLIER_GUID_1.ADDRESS_GUID_NODE_KEY = ADDRESS_GUID_2.NODE_KEY)
+WITH ASSOCIATIONS (
+  MANY TO MANY JOIN anubhav_cds_CDSViews_ItemView AS To_Items ON (To_Items.ProductId = ProductId)
+)

@@ -1,0 +1,12 @@
+VIEW anubhav_cds_CDSViews_ItemView AS SELECT
+  PARENT_KEY_1.PARTNER_GUID_NODE_KEY AS CustomerId,
+  poitems_0.PRODUCT_GUID_NODE_KEY AS ProductId,
+  poitems_0.CURRENCY_code AS CurrencyCode_code,
+  poitems_0.GROSS_AMOUNT AS GrossAmount,
+  poitems_0.NET_AMOUNT AS NetAmount,
+  poitems_0.TAX_AMOUNT AS TaxAmount,
+  PARENT_KEY_1.OVERALL_STATUS AS Status
+FROM (anubhav_db_transaction_poitems AS poitems_0 LEFT JOIN anubhav_db_transaction_purchaseorder AS PARENT_KEY_1 ON poitems_0.PARENT_KEY_ID = PARENT_KEY_1.ID)
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN sap_common_Currencies AS CurrencyCode ON (CurrencyCode.code = CurrencyCode_code)
+)

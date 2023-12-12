@@ -1,0 +1,39 @@
+{
+  "format_version": 1,
+  "imports": [
+    {
+      "target_table": "ANUBHAV_DB_TRANSACTION_POITEMS",
+      "source_data": {
+        "data_type": "CSV",
+        "file_name": "anubhav.db.transaction-poitems.csv",
+        "has_header": true,
+        "type_config": {
+          "delimiter": ","
+        }
+      },
+      "import_settings": {
+        "import_columns": [
+          "ID",
+          "PARENT_KEY_ID",
+          "PO_ITEM_POS",
+          "PRODUCT_GUID_NODE_KEY",
+          "CURRENCY_CODE",
+          "GROSS_AMOUNT",
+          "NET_AMOUNT",
+          "TAX_AMOUNT"
+        ],
+        "include_filter": []
+      },
+      "column_mappings": {
+        "ID": "ID",
+        "PARENT_KEY_ID": "PARENT_KEY_ID",
+        "PO_ITEM_POS": "PO_ITEM_POS",
+        "PRODUCT_GUID_NODE_KEY": "PRODUCT_GUID_NODE_KEY",
+        "CURRENCY_CODE": "CURRENCY_CODE",
+        "GROSS_AMOUNT": "GROSS_AMOUNT",
+        "NET_AMOUNT": "NET_AMOUNT",
+        "TAX_AMOUNT": "TAX_AMOUNT"
+      }
+    }
+  ]
+}

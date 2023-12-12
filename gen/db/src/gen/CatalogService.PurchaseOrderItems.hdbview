@@ -1,0 +1,15 @@
+VIEW CatalogService_PurchaseOrderItems AS SELECT
+  poitems_0.ID,
+  poitems_0.CURRENCY_code,
+  poitems_0.GROSS_AMOUNT,
+  poitems_0.NET_AMOUNT,
+  poitems_0.TAX_AMOUNT,
+  poitems_0.PARENT_KEY_ID,
+  poitems_0.PO_ITEM_POS,
+  poitems_0.PRODUCT_GUID_NODE_KEY
+FROM anubhav_db_transaction_poitems AS poitems_0
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN CatalogService_Currencies AS CURRENCY ON (CURRENCY.code = CURRENCY_code),
+  MANY TO ONE JOIN CatalogService_POs AS PARENT_KEY ON (PARENT_KEY.ID = PARENT_KEY_ID),
+  MANY TO ONE JOIN CatalogService_ProductSet AS PRODUCT_GUID ON (PRODUCT_GUID.NODE_KEY = PRODUCT_GUID_NODE_KEY)
+)

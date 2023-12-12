@@ -1,0 +1,16 @@
+VIEW CatalogService_AddressSet AS SELECT
+  address_0.NODE_KEY,
+  address_0.CITY,
+  address_0.POSTAL_CODE,
+  address_0.STREET,
+  address_0.BUILDING,
+  address_0.COUNTRY,
+  address_0.ADDRESS_TYPE,
+  address_0.VAL_START_DATE,
+  address_0.VAL_END_DATE,
+  address_0.LATITUDE,
+  address_0.LONGITUDE
+FROM anubhav_db_master_address AS address_0
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN CatalogService_BusinessPartnerSet AS businesspartner ON (businesspartner.ADDRESS_GUID_NODE_KEY = NODE_KEY)
+)

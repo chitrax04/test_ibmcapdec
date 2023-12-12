@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "imports": [
+    {
+      "target_table": "ANUBHAV_DB_MASTER_PRODUCT_TEXTS",
+      "source_data": {
+        "data_type": "CSV",
+        "file_name": "anubhav.db.master-product_texts.csv",
+        "has_header": true,
+        "type_config": {
+          "delimiter": ","
+        }
+      },
+      "import_settings": {
+        "import_columns": [
+          "NODE_KEY",
+          "LOCALE",
+          "DESCRIPTION"
+        ],
+        "include_filter": []
+      },
+      "column_mappings": {
+        "NODE_KEY": "NODE_KEY",
+        "LOCALE": "locale",
+        "DESCRIPTION": "DESCRIPTION"
+      }
+    }
+  ]
+}

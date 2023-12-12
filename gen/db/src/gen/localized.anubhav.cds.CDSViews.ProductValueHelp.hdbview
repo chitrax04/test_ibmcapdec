@@ -1,0 +1,4 @@
+VIEW localized_anubhav_cds_CDSViews_ProductValueHelp AS SELECT
+  product_0.PRODUCT_ID AS ProductId,
+  product_0.DESCRIPTION AS Description
+FROM localized_anubhav_db_master_product AS product_0

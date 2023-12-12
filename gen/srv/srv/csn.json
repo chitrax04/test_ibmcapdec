@@ -1,0 +1,3255 @@
+{
+  "namespace": "anubhav.cds",
+  "definitions": {
+    "anubhav.cds.CDSViews": {
+      "kind": "context"
+    },
+    "anubhav.cds.CDSViews.POWorklist": {
+      "kind": "entity",
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "anubhav.db.transaction.purchaseorder"
+            ]
+          },
+          "columns": [
+            {
+              "key": true,
+              "ref": [
+                "PO_ID"
+              ],
+              "as": "PurchaseOrderId"
+            },
+            {
+              "key": true,
+              "ref": [
+                "Items",
+                "PO_ITEM_POS"
+              ],
+              "as": "ItemPosition"
+            },
+            {
+              "ref": [
+                "PARTNER_GUID",
+                "BP_ID"
+              ],
+              "as": "PartnerId"
+            },
+            {
+              "ref": [
+                "PARTNER_GUID",
+                "COMPANY_NAME"
+              ],
+              "as": "CompanyName"
+            },
+            {
+              "ref": [
+                "GROSS_AMOUNT"
+              ],
+              "as": "GrossAmount"
+            },
+            {
+              "ref": [
+                "NET_AMOUNT"
+              ],
+              "as": "NetAmount"
+            },
+            {
+              "ref": [
+                "TAX_AMOUNT"
+              ],
+              "as": "TaxAmount"
+            },
+            {
+              "ref": [
+                "CURRENCY"
+              ],
+              "as": "CurrencyCode"
+            },
+            {
+              "ref": [
+                "OVERALL_STATUS"
+              ],
+              "as": "Status"
+            },
+            {
+              "ref": [
+                "Items",
+                "PRODUCT_GUID",
+                "PRODUCT_ID"
+              ],
+              "as": "ProductId"
+            },
+            {
+              "ref": [
+                "Items",
+                "PRODUCT_GUID",
+                "DESCRIPTION"
+              ],
+              "as": "ProductName"
+            },
+            {
+              "ref": [
+                "PARTNER_GUID",
+                "ADDRESS_GUID",
+                "CITY"
+              ],
+              "as": "City"
+            },
+            {
+              "ref": [
+                "PARTNER_GUID",
+                "ADDRESS_GUID",
+                "COUNTRY"
+              ],
+              "as": "Country"
+            }
+          ]
+        }
+      },
+      "elements": {
+        "PurchaseOrderId": {
+          "@title": "{i18n>PoId}",
+          "key": true,
+          "type": "cds.String",
+          "length": 40
+        },
+        "ItemPosition": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "PartnerId": {
+          "type": "cds.String",
+          "length": 32
+        },
+        "CompanyName": {
+          "@title": "{i18n>CompanyName}",
+          "type": "cds.String",
+          "length": 250
+        },
+        "GrossAmount": {
+          "@title": "{i18n>GrossAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NetAmount": {
+          "@title": "{i18n>NetAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TaxAmount": {
+          "@title": "{i18n>TaxAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "CurrencyCode": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "Status": {
+          "@title": "Status",
+          "type": "cds.String",
+          "length": 1
+        },
+        "ProductId": {
+          "type": "cds.String",
+          "length": 28
+        },
+        "ProductName": {
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "City": {
+          "type": "cds.String",
+          "length": 44
+        },
+        "Country": {
+          "@title": "{i18n>Country}",
+          "type": "cds.String",
+          "length": 44
+        }
+      }
+    },
+    "anubhav.cds.CDSViews.ProductValueHelp": {
+      "kind": "entity",
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "anubhav.db.master.product"
+            ]
+          },
+          "columns": [
+            {
+              "ref": [
+                "PRODUCT_ID"
+              ],
+              "as": "ProductId"
+            },
+            {
+              "ref": [
+                "DESCRIPTION"
+              ],
+              "as": "Description"
+            }
+          ]
+        }
+      },
+      "elements": {
+        "ProductId": {
+          "@EndUserText.label": [
+            {
+              "language": "EN",
+              "text": "Product id"
+            },
+            {
+              "language": "DE",
+              "text": "Prodekt id"
+            }
+          ],
+          "type": "cds.String",
+          "length": 28
+        },
+        "Description": {
+          "@EndUserText.label": [
+            {
+              "language": "EN",
+              "text": "Product Description"
+            },
+            {
+              "language": "DE",
+              "text": "Prodekt Description"
+            }
+          ],
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        }
+      }
+    },
+    "anubhav.cds.CDSViews.ItemView": {
+      "kind": "entity",
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "anubhav.db.transaction.poitems"
+            ]
+          },
+          "columns": [
+            {
+              "ref": [
+                "PARENT_KEY",
+                "PARTNER_GUID",
+                "NODE_KEY"
+              ],
+              "as": "CustomerId"
+            },
+            {
+              "ref": [
+                "PRODUCT_GUID",
+                "NODE_KEY"
+              ],
+              "as": "ProductId"
+            },
+            {
+              "ref": [
+                "CURRENCY"
+              ],
+              "as": "CurrencyCode"
+            },
+            {
+              "ref": [
+                "GROSS_AMOUNT"
+              ],
+              "as": "GrossAmount"
+            },
+            {
+              "ref": [
+                "NET_AMOUNT"
+              ],
+              "as": "NetAmount"
+            },
+            {
+              "ref": [
+                "TAX_AMOUNT"
+              ],
+              "as": "TaxAmount"
+            },
+            {
+              "ref": [
+                "PARENT_KEY",
+                "OVERALL_STATUS"
+              ],
+              "as": "Status"
+            }
+          ]
+        }
+      },
+      "elements": {
+        "CustomerId": {
+          "@title": "Partner Id",
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "ProductId": {
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "CurrencyCode": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GrossAmount": {
+          "@title": "{i18n>GrossAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NetAmount": {
+          "@title": "{i18n>NetAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TaxAmount": {
+          "@title": "{i18n>TaxAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "Status": {
+          "@title": "Status",
+          "type": "cds.String",
+          "length": 1
+        }
+      }
+    },
+    "anubhav.cds.CDSViews.ProductView": {
+      "kind": "entity",
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "anubhav.db.master.product"
+            ]
+          },
+          "mixin": {
+            "PO_ORDER": {
+              "type": "cds.Association",
+              "cardinality": {
+                "max": "*"
+              },
+              "target": "anubhav.cds.CDSViews.ItemView",
+              "on": [
+                {
+                  "ref": [
+                    "PO_ORDER",
+                    "ProductId"
+                  ]
+                },
+                "=",
+                {
+                  "ref": [
+                    "$projection",
+                    "ProductId"
+                  ]
+                }
+              ]
+            }
+          },
+          "columns": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ],
+              "as": "ProductId"
+            },
+            {
+              "ref": [
+                "DESCRIPTION"
+              ],
+              "as": "Description"
+            },
+            {
+              "ref": [
+                "CATEGORY"
+              ],
+              "as": "Category"
+            },
+            {
+              "ref": [
+                "PRICE"
+              ],
+              "as": "Price"
+            },
+            {
+              "ref": [
+                "SUPPLIER_GUID",
+                "BP_ID"
+              ],
+              "as": "SupplierId"
+            },
+            {
+              "ref": [
+                "SUPPLIER_GUID",
+                "COMPANY_NAME"
+              ],
+              "as": "SupplierName"
+            },
+            {
+              "ref": [
+                "SUPPLIER_GUID",
+                "ADDRESS_GUID",
+                "CITY"
+              ],
+              "as": "City"
+            },
+            {
+              "ref": [
+                "SUPPLIER_GUID",
+                "ADDRESS_GUID",
+                "COUNTRY"
+              ],
+              "as": "Country"
+            },
+            {
+              "ref": [
+                "PO_ORDER"
+              ],
+              "as": "To_Items"
+            }
+          ]
+        }
+      },
+      "elements": {
+        "ProductId": {
+          "key": true,
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "Description": {
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "Category": {
+          "type": "cds.String",
+          "length": 32
+        },
+        "Price": {
+          "type": "cds.Decimal",
+          "precision": 15,
+          "scale": 2
+        },
+        "SupplierId": {
+          "type": "cds.String",
+          "length": 32
+        },
+        "SupplierName": {
+          "@title": "{i18n>CompanyName}",
+          "type": "cds.String",
+          "length": 250
+        },
+        "City": {
+          "type": "cds.String",
+          "length": 44
+        },
+        "Country": {
+          "@title": "{i18n>Country}",
+          "type": "cds.String",
+          "length": 44
+        },
+        "To_Items": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "anubhav.cds.CDSViews.ItemView",
+          "on": [
+            {
+              "ref": [
+                "To_Items",
+                "ProductId"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self",
+                "ProductId"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "anubhav.cds.CDSViews.CProductValuesView": {
+      "kind": "entity",
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "anubhav.cds.CDSViews.ProductView"
+            ]
+          },
+          "columns": [
+            {
+              "ref": [
+                "ProductId"
+              ]
+            },
+            {
+              "ref": [
+                "Country"
+              ]
+            },
+            {
+              "func": "round",
+              "args": [
+                {
+                  "func": "sum",
+                  "args": [
+                    {
+                      "ref": [
+                        "To_Items",
+                        "GrossAmount"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "val": 2
+                }
+              ],
+              "as": "TotalPurchaseAmount",
+              "cast": {
+                "type": "cds.Decimal",
+                "precision": 10,
+                "scale": 2
+              }
+            },
+            {
+              "ref": [
+                "To_Items",
+                "CurrencyCode"
+              ],
+              "as": "CurrencyCode"
+            }
+          ],
+          "groupBy": [
+            {
+              "ref": [
+                "ProductId"
+              ]
+            },
+            {
+              "ref": [
+                "Country"
+              ]
+            },
+            {
+              "ref": [
+                "To_Items",
+                "CurrencyCode"
+              ]
+            }
+          ]
+        }
+      },
+      "elements": {
+        "ProductId": {
+          "key": true,
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "Country": {
+          "@title": "{i18n>Country}",
+          "type": "cds.String",
+          "length": 44
+        },
+        "TotalPurchaseAmount": {
+          "@Core.Computed": true,
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 2
+        },
+        "CurrencyCode": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "anubhav.common.Gender": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 1,
+      "enum": {
+        "male": {
+          "val": "M"
+        },
+        "female": {
+          "val": "F"
+        },
+        "undisclosed": {
+          "val": "U"
+        }
+      }
+    },
+    "anubhav.common.AmountT": {
+      "kind": "type",
+      "@Semantics.amount.currencyCode": "CURRENCY_code",
+      "@sap.unit": "CURRENCY_code",
+      "type": "cds.Decimal",
+      "precision": 10,
+      "scale": 2
+    },
+    "anubhav.common.Amount": {
+      "kind": "aspect",
+      "elements": {
+        "CURRENCY": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GROSS_AMOUNT": {
+          "@title": "{i18n>GrossAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NET_AMOUNT": {
+          "@title": "{i18n>NetAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TAX_AMOUNT": {
+          "@title": "{i18n>TaxAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        }
+      }
+    },
+    "anubhav.common.Guid": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 32
+    },
+    "anubhav.common.PhoneNumber": {
+      "kind": "type",
+      "@assert.format": "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$",
+      "type": "cds.String",
+      "length": 30
+    },
+    "anubhav.common.Email": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 255
+    },
+    "anubhav.db.master": {
+      "kind": "context"
+    },
+    "anubhav.db.master.businesspartner": {
+      "kind": "entity",
+      "elements": {
+        "NODE_KEY": {
+          "@title": "Partner Id",
+          "key": true,
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "BP_ROLE": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "EMAIL_ADDRESS": {
+          "type": "cds.String",
+          "length": 105
+        },
+        "PHONE_NUMBER": {
+          "type": "cds.String",
+          "length": 32
+        },
+        "FAX_NUMBER": {
+          "type": "cds.String",
+          "length": 32
+        },
+        "WEB_ADDRESS": {
+          "type": "cds.String",
+          "length": 44
+        },
+        "ADDRESS_GUID": {
+          "type": "cds.Association",
+          "target": "anubhav.db.master.address",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "BP_ID": {
+          "type": "cds.String",
+          "length": 32
+        },
+        "COMPANY_NAME": {
+          "@title": "{i18n>CompanyName}",
+          "type": "cds.String",
+          "length": 250
+        }
+      }
+    },
+    "anubhav.db.master.address": {
+      "kind": "entity",
+      "elements": {
+        "NODE_KEY": {
+          "key": true,
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "CITY": {
+          "type": "cds.String",
+          "length": 44
+        },
+        "POSTAL_CODE": {
+          "type": "cds.String",
+          "length": 8
+        },
+        "STREET": {
+          "type": "cds.String",
+          "length": 44
+        },
+        "BUILDING": {
+          "type": "cds.String",
+          "length": 128
+        },
+        "COUNTRY": {
+          "@title": "{i18n>Country}",
+          "type": "cds.String",
+          "length": 44
+        },
+        "ADDRESS_TYPE": {
+          "type": "cds.String",
+          "length": 44
+        },
+        "VAL_START_DATE": {
+          "type": "cds.Date"
+        },
+        "VAL_END_DATE": {
+          "type": "cds.Date"
+        },
+        "LATITUDE": {
+          "type": "cds.Decimal"
+        },
+        "LONGITUDE": {
+          "type": "cds.Decimal"
+        },
+        "businesspartner": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": 1
+          },
+          "target": "anubhav.db.master.businesspartner",
+          "on": [
+            {
+              "ref": [
+                "businesspartner",
+                "ADDRESS_GUID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "anubhav.db.master.product": {
+      "kind": "entity",
+      "elements": {
+        "NODE_KEY": {
+          "key": true,
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "PRODUCT_ID": {
+          "type": "cds.String",
+          "length": 28
+        },
+        "TYPE_CODE": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "CATEGORY": {
+          "type": "cds.String",
+          "length": 32
+        },
+        "DESCRIPTION": {
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "SUPPLIER_GUID": {
+          "type": "cds.Association",
+          "target": "anubhav.db.master.businesspartner",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "TAX_TARIF_CODE": {
+          "type": "cds.Integer"
+        },
+        "MEASURE_UNIT": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "WEIGHT_MEASURE": {
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "WEIGHT_UNIT": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "CURRENCY_CODE": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "PRICE": {
+          "type": "cds.Decimal",
+          "precision": 15,
+          "scale": 2
+        },
+        "WIDTH": {
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "DEPTH": {
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "HEIGHT": {
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "DIM_UNIT": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "anubhav.db.master.product.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "NODE_KEY"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "anubhav.db.master.product.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "NODE_KEY"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "anubhav.db.master.employees": {
+      "kind": "entity",
+      "includes": [
+        "cuid"
+      ],
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "nameFirst": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameMiddle": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameLast": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameInitials": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "sex": {
+          "type": "anubhav.common.Gender",
+          "length": 1
+        },
+        "language": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "phoneNumber": {
+          "@assert.format": "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$",
+          "type": "anubhav.common.PhoneNumber",
+          "length": 30
+        },
+        "email": {
+          "type": "anubhav.common.Email",
+          "length": 255
+        },
+        "loginName": {
+          "type": "cds.String",
+          "length": 12
+        },
+        "Currency": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "salaryAmount": {
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "accountNumber": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "bankId": {
+          "type": "cds.String",
+          "length": 30
+        },
+        "bankName": {
+          "type": "cds.String",
+          "length": 64
+        }
+      }
+    },
+    "anubhav.db.transaction": {
+      "kind": "context"
+    },
+    "anubhav.db.transaction.purchaseorder": {
+      "kind": "entity",
+      "includes": [
+        "cuid",
+        "anubhav.common.Amount"
+      ],
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "CURRENCY": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GROSS_AMOUNT": {
+          "@title": "{i18n>GrossAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NET_AMOUNT": {
+          "@title": "{i18n>NetAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TAX_AMOUNT": {
+          "@title": "{i18n>TaxAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "PO_ID": {
+          "@title": "{i18n>PoId}",
+          "type": "cds.String",
+          "length": 40
+        },
+        "PARTNER_GUID": {
+          "type": "cds.Association",
+          "target": "anubhav.db.master.businesspartner",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "LIFECYCLE_STATUS": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "OVERALL_STATUS": {
+          "@title": "Status",
+          "type": "cds.String",
+          "length": 1
+        },
+        "Items": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "anubhav.db.transaction.poitems",
+          "on": [
+            {
+              "ref": [
+                "Items",
+                "PARENT_KEY"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "anubhav.db.transaction.poitems": {
+      "kind": "entity",
+      "includes": [
+        "cuid",
+        "anubhav.common.Amount"
+      ],
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "CURRENCY": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GROSS_AMOUNT": {
+          "@title": "{i18n>GrossAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NET_AMOUNT": {
+          "@title": "{i18n>NetAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TAX_AMOUNT": {
+          "@title": "{i18n>TaxAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "PARENT_KEY": {
+          "type": "cds.Association",
+          "target": "anubhav.db.transaction.purchaseorder",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "PO_ITEM_POS": {
+          "type": "cds.Integer"
+        },
+        "PRODUCT_GUID": {
+          "type": "cds.Association",
+          "target": "anubhav.db.master.product",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService": {
+      "@source": "srv/CatalogService.cds",
+      "kind": "service",
+      "@path": "CatalogService",
+      "@requires": "authenticated-user"
+    },
+    "CatalogService.BusinessPartnerSet": {
+      "kind": "entity",
+      "@Capabilities.Insertable": true,
+      "@Capabilities.Updatable": true,
+      "@Capabilities.Deletable": false,
+      "@cds.odata.valuelist": true,
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "COMPANY_NAME"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "ADDRESS_GUID.COUNTRY"
+          }
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "anubhav.db.master.businesspartner"
+          ]
+        }
+      },
+      "elements": {
+        "NODE_KEY": {
+          "@title": "Partner Id",
+          "key": true,
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "BP_ROLE": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "EMAIL_ADDRESS": {
+          "type": "cds.String",
+          "length": 105
+        },
+        "PHONE_NUMBER": {
+          "type": "cds.String",
+          "length": 32
+        },
+        "FAX_NUMBER": {
+          "type": "cds.String",
+          "length": 32
+        },
+        "WEB_ADDRESS": {
+          "type": "cds.String",
+          "length": 44
+        },
+        "ADDRESS_GUID": {
+          "type": "cds.Association",
+          "target": "CatalogService.AddressSet",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "BP_ID": {
+          "type": "cds.String",
+          "length": 32
+        },
+        "COMPANY_NAME": {
+          "@title": "{i18n>CompanyName}",
+          "type": "cds.String",
+          "length": 250
+        }
+      }
+    },
+    "CatalogService.AddressSet": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "anubhav.db.master.address"
+          ]
+        }
+      },
+      "elements": {
+        "NODE_KEY": {
+          "key": true,
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "CITY": {
+          "type": "cds.String",
+          "length": 44
+        },
+        "POSTAL_CODE": {
+          "type": "cds.String",
+          "length": 8
+        },
+        "STREET": {
+          "type": "cds.String",
+          "length": 44
+        },
+        "BUILDING": {
+          "type": "cds.String",
+          "length": 128
+        },
+        "COUNTRY": {
+          "@title": "{i18n>Country}",
+          "type": "cds.String",
+          "length": 44
+        },
+        "ADDRESS_TYPE": {
+          "type": "cds.String",
+          "length": 44
+        },
+        "VAL_START_DATE": {
+          "type": "cds.Date"
+        },
+        "VAL_END_DATE": {
+          "type": "cds.Date"
+        },
+        "LATITUDE": {
+          "type": "cds.Decimal"
+        },
+        "LONGITUDE": {
+          "type": "cds.Decimal"
+        },
+        "businesspartner": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": 1
+          },
+          "target": "CatalogService.BusinessPartnerSet",
+          "on": [
+            {
+              "ref": [
+                "businesspartner",
+                "ADDRESS_GUID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService.EmployeeSet": {
+      "kind": "entity",
+      "@restrict": [
+        {
+          "grant": [
+            "READ"
+          ],
+          "to": "Viewer",
+          "where": "bankName = $user.BankName",
+          "_where": "[{\"ref\":[\"bankName\"]},\"=\",{\"ref\":[\"$user\",\"BankName\"]}]"
+        },
+        {
+          "grant": [
+            "WRITE"
+          ],
+          "to": "Admin"
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "anubhav.db.master.employees"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "nameFirst": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameMiddle": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameLast": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameInitials": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "sex": {
+          "type": "anubhav.common.Gender",
+          "length": 1
+        },
+        "language": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "phoneNumber": {
+          "@assert.format": "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$",
+          "type": "anubhav.common.PhoneNumber",
+          "length": 30
+        },
+        "email": {
+          "type": "anubhav.common.Email",
+          "length": 255
+        },
+        "loginName": {
+          "type": "cds.String",
+          "length": 12
+        },
+        "Currency": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "CatalogService.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "salaryAmount": {
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "accountNumber": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "bankId": {
+          "type": "cds.String",
+          "length": 30
+        },
+        "bankName": {
+          "type": "cds.String",
+          "length": 64
+        }
+      }
+    },
+    "CatalogService.PurchaseOrderItems": {
+      "kind": "entity",
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PO_ITEM_POS"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID_NODE_KEY"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "GROSS_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "NET_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "TAX_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "CURRENCY.code"
+          }
+        }
+      ],
+      "@UI.HeaderInfo.TypeName": "PO Item",
+      "@UI.HeaderInfo.TypeNamePlural": "PO Items",
+      "@UI.HeaderInfo.Title.Value": {
+        "=": "PO_ITEM_POS"
+      },
+      "@UI.HeaderInfo.Description.Value": {
+        "=": "PRODUCT_GUID.DESCRIPTION"
+      },
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "Label": "Item Data",
+          "Target": "@UI.FieldGroup#ItemInfo"
+        },
+        {
+          "$Type": "UI.ReferenceFacet",
+          "Label": "Price Data",
+          "Target": "@UI.FieldGroup#PriceInfo"
+        }
+      ],
+      "@UI.FieldGroup#ItemInfo.Label": "Item Data",
+      "@UI.FieldGroup#ItemInfo.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PO_ITEM_POS"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID_NODE_KEY"
+          }
+        }
+      ],
+      "@UI.FieldGroup#PriceInfo.Label": "Price Data",
+      "@UI.FieldGroup#PriceInfo.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "GROSS_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "NET_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "TAX_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "CURRENCY.code"
+          }
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "anubhav.db.transaction.poitems"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "CURRENCY": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "CatalogService.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GROSS_AMOUNT": {
+          "@title": "{i18n>GrossAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NET_AMOUNT": {
+          "@title": "{i18n>NetAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TAX_AMOUNT": {
+          "@title": "{i18n>TaxAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "PARENT_KEY": {
+          "type": "cds.Association",
+          "target": "CatalogService.POs",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "PO_ITEM_POS": {
+          "type": "cds.Integer"
+        },
+        "PRODUCT_GUID": {
+          "@Common.Text": {
+            "=": "PRODUCT_GUID.DESCRIPTION"
+          },
+          "@Common.ValueList.entity": {
+            "=": "CatalogService.ProductSet"
+          },
+          "type": "cds.Association",
+          "target": "CatalogService.ProductSet",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService.getOrderDefaults": {
+      "kind": "function",
+      "returns": {
+        "type": "CatalogService.POs"
+      }
+    },
+    "CatalogService.POs": {
+      "kind": "entity",
+      "@odata.draft.enabled": true,
+      "@Common.DefaultValuesFunction": "getOrderDefaults",
+      "@UI.SelectionFields": [
+        {
+          "=": "PO_ID"
+        },
+        {
+          "=": "GROSS_AMOUNT"
+        },
+        {
+          "=": "PARTNER_GUID.COMPANY_NAME"
+        },
+        {
+          "=": "PARTNER_GUID.ADDRESS_GUID.COUNTRY"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PO_ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "GROSS_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "CatalogService.boost",
+          "Label": "Boost",
+          "Inline": true
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "CURRENCY.code"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PARTNER_GUID.COMPANY_NAME"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PARTNER_GUID.ADDRESS_GUID.COUNTRY"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "OverallStatus"
+          },
+          "Criticality": {
+            "=": "ColorCode"
+          }
+        }
+      ],
+      "@UI.HeaderInfo.TypeName": "PO",
+      "@UI.HeaderInfo.TypeNamePlural": "Purchase Orders",
+      "@UI.HeaderInfo.Title.Label": "PO Number",
+      "@UI.HeaderInfo.Title.Value": {
+        "=": "PO_ID"
+      },
+      "@UI.HeaderInfo.Description.Value": {
+        "=": "PARTNER_GUID.COMPANY_NAME"
+      },
+      "@UI.HeaderInfo.ImageUrl": "https://yt3.googleusercontent.com/zCgSuKDRBWCoEFP52F5WNm-8q6FYKiiIlgpdqjdQaZekQc-PDcyFhi-cO8bkvtvOvH6qPBSg=s900-c-k-c0x00ffffff-no-rj",
+      "@UI.Facets": [
+        {
+          "$Type": "UI.CollectionFacet",
+          "Label": "More Info",
+          "Facets": [
+            {
+              "$Type": "UI.ReferenceFacet",
+              "Label": "Details",
+              "Target": "@UI.FieldGroup#Spiderman"
+            },
+            {
+              "$Type": "UI.ReferenceFacet",
+              "Label": "Pricing",
+              "Target": "@UI.FieldGroup#Superman"
+            }
+          ]
+        },
+        {
+          "$Type": "UI.ReferenceFacet",
+          "Label": "PO Items",
+          "Target": "Items/@UI.LineItem"
+        }
+      ],
+      "@UI.FieldGroup#Spiderman.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PO_ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PARTNER_GUID_NODE_KEY"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "OVERALL_STATUS"
+          }
+        }
+      ],
+      "@UI.FieldGroup#Superman.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "GROSS_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "NET_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "TAX_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "CURRENCY.code"
+          }
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "anubhav.db.transaction.purchaseorder"
+          ]
+        },
+        "columns": [
+          {
+            "xpr": [
+              "case",
+              {
+                "ref": [
+                  "OVERALL_STATUS"
+                ]
+              },
+              "when",
+              {
+                "val": "A"
+              },
+              "then",
+              {
+                "val": "Approved"
+              },
+              "when",
+              {
+                "val": "X"
+              },
+              "then",
+              {
+                "val": "Rejected"
+              },
+              "when",
+              {
+                "val": "N"
+              },
+              "then",
+              {
+                "val": "New"
+              },
+              "when",
+              {
+                "val": "D"
+              },
+              "then",
+              {
+                "val": "Delivered"
+              },
+              "when",
+              {
+                "val": "P"
+              },
+              "then",
+              {
+                "val": "Pending"
+              },
+              "end"
+            ],
+            "as": "OverallStatus",
+            "cast": {
+              "type": "cds.String",
+              "length": 10
+            }
+          },
+          {
+            "xpr": [
+              "case",
+              {
+                "ref": [
+                  "OVERALL_STATUS"
+                ]
+              },
+              "when",
+              {
+                "val": "A"
+              },
+              "then",
+              {
+                "val": 3
+              },
+              "when",
+              {
+                "val": "X"
+              },
+              "then",
+              {
+                "val": 1
+              },
+              "when",
+              {
+                "val": "N"
+              },
+              "then",
+              {
+                "val": 2
+              },
+              "when",
+              {
+                "val": "D"
+              },
+              "then",
+              {
+                "val": 3
+              },
+              "when",
+              {
+                "val": "P"
+              },
+              "then",
+              {
+                "val": 2
+              },
+              "end"
+            ],
+            "as": "ColorCode",
+            "cast": {
+              "type": "cds.Integer"
+            }
+          },
+          "*",
+          {
+            "ref": [
+              "Items"
+            ]
+          }
+        ]
+      },
+      "elements": {
+        "OverallStatus": {
+          "@Core.Computed": true,
+          "type": "cds.String",
+          "length": 10
+        },
+        "ColorCode": {
+          "@Core.Computed": true,
+          "type": "cds.Integer"
+        },
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "CURRENCY": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "CatalogService.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GROSS_AMOUNT": {
+          "@title": "{i18n>GrossAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NET_AMOUNT": {
+          "@title": "{i18n>NetAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TAX_AMOUNT": {
+          "@title": "{i18n>TaxAmount}",
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "PO_ID": {
+          "@title": "{i18n>PoId}",
+          "type": "cds.String",
+          "length": 40
+        },
+        "PARTNER_GUID": {
+          "@Common.Text": {
+            "=": "PARTNER_GUID.COMPANY_NAME"
+          },
+          "@Common.ValueList.entity": {
+            "=": "CatalogService.BusinessPartnerSet"
+          },
+          "type": "cds.Association",
+          "target": "CatalogService.BusinessPartnerSet",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "LIFECYCLE_STATUS": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "OVERALL_STATUS": {
+          "@title": "Status",
+          "type": "cds.String",
+          "length": 1
+        },
+        "Items": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "CatalogService.PurchaseOrderItems",
+          "on": [
+            {
+              "ref": [
+                "Items",
+                "PARENT_KEY"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      },
+      "actions": {
+        "boost": {
+          "kind": "action",
+          "@cds.odata.bindingparameter.name": "_anubhav",
+          "@Common.SideEffects.TargetProperties": [
+            "_anubhav/GROSS_AMOUNT"
+          ]
+        },
+        "largestOrder": {
+          "kind": "function",
+          "returns": {
+            "items": {
+              "type": "CatalogService.POs"
+            }
+          }
+        }
+      }
+    },
+    "CatalogService.ProductSet": {
+      "kind": "entity",
+      "@cds.odata.valuelist": true,
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "DESCRIPTION"
+          }
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "anubhav.db.master.product"
+          ]
+        }
+      },
+      "elements": {
+        "NODE_KEY": {
+          "key": true,
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "PRODUCT_ID": {
+          "type": "cds.String",
+          "length": 28
+        },
+        "TYPE_CODE": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "CATEGORY": {
+          "type": "cds.String",
+          "length": 32
+        },
+        "DESCRIPTION": {
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "SUPPLIER_GUID": {
+          "type": "cds.Association",
+          "target": "CatalogService.BusinessPartnerSet",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "TAX_TARIF_CODE": {
+          "type": "cds.Integer"
+        },
+        "MEASURE_UNIT": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "WEIGHT_MEASURE": {
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "WEIGHT_UNIT": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "CURRENCY_CODE": {
+          "type": "cds.String",
+          "length": 4
+        },
+        "PRICE": {
+          "type": "cds.Decimal",
+          "precision": 15,
+          "scale": 2
+        },
+        "WIDTH": {
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "DEPTH": {
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "HEIGHT": {
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "DIM_UNIT": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "CatalogService.ProductSet.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "NODE_KEY"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "CatalogService.ProductSet.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "NODE_KEY"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "MyService": {
+      "@source": "srv/MyService.cds",
+      "kind": "service",
+      "@path": "MyService"
+    },
+    "MyService.hello": {
+      "kind": "function",
+      "params": {
+        "name": {
+          "type": "cds.String",
+          "length": 30
+        }
+      },
+      "returns": {
+        "type": "cds.String"
+      }
+    },
+    "MyService.ReadEmployeeSrv": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "anubhav.db.master.employees"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "nameFirst": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameMiddle": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameLast": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameInitials": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "sex": {
+          "type": "anubhav.common.Gender",
+          "length": 1
+        },
+        "language": {
+          "type": "cds.String",
+          "length": 1
+        },
+        "phoneNumber": {
+          "@assert.format": "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$",
+          "type": "anubhav.common.PhoneNumber",
+          "length": 30
+        },
+        "email": {
+          "type": "anubhav.common.Email",
+          "length": 255
+        },
+        "loginName": {
+          "type": "cds.String",
+          "length": 12
+        },
+        "Currency": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "MyService.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "salaryAmount": {
+          "@Semantics.amount.currencyCode": "CURRENCY_code",
+          "@sap.unit": "CURRENCY_code",
+          "type": "anubhav.common.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "accountNumber": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "bankId": {
+          "type": "cds.String",
+          "length": 30
+        },
+        "bankName": {
+          "type": "cds.String",
+          "length": 64
+        }
+      }
+    },
+    "Language": {
+      "kind": "type",
+      "@title": "{i18n>Language}",
+      "@description": "{i18n>LanguageCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Languages",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "Currency": {
+      "kind": "type",
+      "@title": "{i18n>Currency}",
+      "@description": "{i18n>CurrencyCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Currencies",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "Country": {
+      "kind": "type",
+      "@title": "{i18n>Country}",
+      "@description": "{i18n>CountryCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Countries",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "sap.common": {
+      "kind": "context"
+    },
+    "sap.common.Locale": {
+      "kind": "type",
+      "@title": "{i18n>LanguageCode}",
+      "type": "cds.String",
+      "length": 14
+    },
+    "sap.common.Languages": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@Common.Text": {
+            "=": "name"
+          },
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Languages.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Languages.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.Countries": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.Currencies": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "symbol": {
+          "@title": "{i18n>CurrencySymbol}",
+          "type": "cds.String",
+          "length": 5
+        },
+        "minorUnit": {
+          "@title": "{i18n>CurrencyMinorUnit}",
+          "type": "cds.Int16"
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.CodeList": {
+      "kind": "aspect",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        }
+      }
+    },
+    "sap.common.TextsAspect": {
+      "kind": "aspect",
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        }
+      }
+    },
+    "cuid": {
+      "kind": "aspect",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        }
+      }
+    },
+    "managed": {
+      "kind": "aspect",
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        }
+      }
+    },
+    "temporal": {
+      "kind": "aspect",
+      "elements": {
+        "validFrom": {
+          "@cds.valid.from": true,
+          "type": "cds.Timestamp"
+        },
+        "validTo": {
+          "@cds.valid.to": true,
+          "type": "cds.Timestamp"
+        }
+      }
+    },
+    "User": {
+      "kind": "type",
+      "@title": "{i18n>UserID}",
+      "@description": "{i18n>UserID.Description}",
+      "type": "cds.String",
+      "length": 255
+    },
+    "extensible": {
+      "kind": "aspect",
+      "elements": {
+        "extensions__": {
+          "@cds.api.ignore": true,
+          "type": "cds.String"
+        }
+      }
+    },
+    "anubhav.db.master.product.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "includes": [
+        "sap.common.TextsAspect"
+      ],
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "NODE_KEY": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "DESCRIPTION": {
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        }
+      }
+    },
+    "sap.common.Languages.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "includes": [
+        "sap.common.TextsAspect"
+      ],
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@Common.Text": {
+            "=": "name"
+          },
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        }
+      }
+    },
+    "sap.common.Countries.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "includes": [
+        "sap.common.TextsAspect"
+      ],
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "sap.common.Currencies.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "includes": [
+        "sap.common.TextsAspect"
+      ],
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "CatalogService.Currencies": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Currencies"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "symbol": {
+          "@title": "{i18n>CurrencySymbol}",
+          "type": "cds.String",
+          "length": 5
+        },
+        "minorUnit": {
+          "@title": "{i18n>CurrencyMinorUnit}",
+          "type": "cds.Int16"
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "CatalogService.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "CatalogService.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService.ProductSet.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "anubhav.db.master.product.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "NODE_KEY": {
+          "@odata.containment.ignore": true,
+          "key": true,
+          "type": "anubhav.common.Guid",
+          "length": 32
+        },
+        "DESCRIPTION": {
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        }
+      }
+    },
+    "MyService.Currencies": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Currencies"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "symbol": {
+          "@title": "{i18n>CurrencySymbol}",
+          "type": "cds.String",
+          "length": 5
+        },
+        "minorUnit": {
+          "@title": "{i18n>CurrencyMinorUnit}",
+          "type": "cds.Int16"
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "MyService.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "MyService.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService.Currencies.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Currencies.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "MyService.Currencies.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Currencies.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    }
+  },
+  "meta": {
+    "creator": "CDS Compiler v4.4.4",
+    "flavor": "inferred"
+  },
+  "$version": "2.0"
+}
